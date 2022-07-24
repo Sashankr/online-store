@@ -49,7 +49,7 @@ function Navbar() {
                       }}
                       className="text-lg font-bold"
                     >
-                      Store
+                      <i className="fa-solid fa-store"></i> Store
                     </a>
                   </Link>
                 </div>
