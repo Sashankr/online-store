@@ -17,11 +17,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+const root = "/";
+
 function Navbar() {
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.navigation.value);
-
-  console.log(currentPage);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -42,7 +42,16 @@ function Navbar() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <h2 className="text-lg font-bold">Store</h2>
+                  <Link href={root}>
+                    <a
+                      onClick={() => {
+                        dispatch(updateCurrentPage("Home"));
+                      }}
+                      className="text-lg font-bold"
+                    >
+                      Store
+                    </a>
+                  </Link>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
