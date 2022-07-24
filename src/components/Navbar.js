@@ -3,12 +3,14 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { updateCurrentPage } from "../features/navigation/navigationSlice";
 
 const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Games", href: "/games", current: false },
-  { name: "Consoles", href: "/consoles", current: false },
-  { name: `FAQ's`, href: "/faqs", current: false },
+  { id: 1, name: "Home", href: "/", current: true },
+  { id: 2, name: "Games", href: "/games", current: false },
+  { id: 3, name: "Consoles", href: "/consoles", current: false },
+  { id: 4, name: `FAQ's`, href: "/faqs", current: false },
 ];
 
 function classNames(...classes) {
@@ -16,6 +18,11 @@ function classNames(...classes) {
 }
 
 function Navbar() {
+  const dispatch = useDispatch();
+  const currentPage = useSelector((state) => state.navigation.value);
+
+  console.log(currentPage);
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -40,11 +47,14 @@ function Navbar() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <Link href={item.href}>
+                      <Link key={item.id} href={item.href}>
                         <a
+                          onClick={() => {
+                            dispatch(updateCurrentPage(item.name));
+                          }}
                           key={item.name}
                           className={classNames(
-                            item.current
+                            item.name === currentPage
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
                             "px-3 py-2 rounded-md text-sm font-medium"
